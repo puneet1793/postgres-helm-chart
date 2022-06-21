@@ -1,0 +1,54 @@
+--- 
+apiVersion: apps/v1
+kind: StatefulSet
+metadata: 
+  name: pg
+  namespace: {{ .Values.namespace }}
+spec: 
+  replicas: {{ .Values.replicas }}
+  selector: 
+    matchLabels: 
+      applicationid: {{ .Values.application_id }}
+      environment: {{ .Values.environment }}
+      role: pg
+  serviceName: pg-svc
+  template: 
+    metadata: 
+      labels: 
+        applicationid: {{ .Values.application_id }}
+        environment: {{ .Values.environment }}
+        role: pg
+    spec: 
+      containers: 
+        - 
+          env: 
+            - 
+              name: POSTGRES_PASSWORD
+              value: {{ .Values.pg_password }}
+          image: {{ .Values.image }}
+          name: pg
+          ports: 
+            - 
+              containerPort: 5432
+          volumeMounts: 
+            - 
+              mountPath: /var/lib/postgresql/data
+              name: pg-persistent-storage
+              subPath: postgres
+      imagePullSecrets: 
+        - 
+          name: regcred
+      serviceAccountName: pg-access
+  volumeClaimTemplates: 
+    - 
+      metadata: 
+        name: pg-persistent-storage
+        namespace: {{ .Values.namespace }}
+      spec: 
+        accessModes: 
+          - ReadWriteOnce
+        resources: 
+          requests: 
+            storage: {{ .Values.pg_storage_size }}
+        storageClassName: gp2-encrypt
+
