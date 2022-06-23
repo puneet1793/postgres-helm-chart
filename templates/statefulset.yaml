@@ -25,6 +25,9 @@ spec:
             - 
               name: POSTGRES_PASSWORD
               value: {{ .Values.pg_password }}
+            - 
+              name: POSTGRES_USER
+              value: {{ .Values.pg_user }}              
           image: {{ .Values.image }}
           name: pg
           ports: 
