@@ -1,6 +1,8 @@
 # Below are the prerequisites need to create before postgres helm chart deployment.
 # 1.  Create namespace first
-# 2. Create docker secret to pull the image from private registry: kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
+# 2. Create docker secret to pull the image from private registry: kubectl create secret docker-registry regcred -n <NAMESPACE> --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
+# 3. clone helm chart repo and go inside the directory cd <DIRECTORY>
+# 4. helm install postgres .
 
 namespace::
 application_id:
