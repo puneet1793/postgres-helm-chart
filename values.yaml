@@ -10,5 +10,6 @@ environment:
 image:
 kms_key_id:
 pg_password: test1234
+pg_user: postgres
 replicas: 3
 pg_storage_size: 10
